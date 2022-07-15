@@ -121,6 +121,28 @@
                         person.getInfo()
                     7. 위의 함수 안에 this 생성 방식을 전문용어(?)로 렉시컬 스코프 (lexical scope)라고 한다.
                     8. 함수가 포함된 영역을 가르키는 상황이 필요하다면 일반 함수를 사용하고, 그게 아니라면 화살표 함수를 사용하면 된다.
+                    9. 화살표 함수를 쓰면 안되는 경우
+                        - Object 안에서 함수 정의 시 객체
+                            const person = {
+                                points : 20,
+                                score : function() {
+                                    this.points++;      // 여기에서는 화살표 함수를 쓰면 points 가 증가 되지 않는다.
+                                }
+                            }
+
+                        - 프로토타입 함수
+                            class Car {
+                                constructor(make, color){
+                                    this.make = make;
+                                    this.color = color;
+                                }
+                            }
+                            let hyundai = new Car("MrJung", "Blue")
+                            Car. prototype.summary = function () {
+                                console.log(`This car is a ${this.make} in the colour ${this.color}`)
+                                    // 여기에서 화살표 함수를 쓰면 사용이 불가능 해진다.
+                            }
+                            hyundai.summary()
 
                 - 변수 선언 키워드
                     1. 기존에 사용되던 변수 선언의 키워드는 var 이다.
@@ -161,10 +183,123 @@
                         let name = "SungJin"
                         let age = 20
                         위의 데이터들을 가지고 객체를 만든다면 다음과 같았다.
-                            let person = {이름: name, 나이: age}
+                            let person = {
+                                이름: name, 
+                                나이: age
+                            }
                         바뀐 방법으로 만들면 다음과 같다.
                             let person = {name, age}
 
+                    5. 객체 분해 방법
+                        let bts = {
+                            name : "방탄소년단",
+                            num : 7
+                        }
+                        // 기존의 우리가 사용하던 방법
+                            let name = bts.name
+                            let num = btn.num
+                        // EX6 최신 문법
+                            let {name, num} = bts
+                            let {name : nameValue, num : numValue} = bts        //  객체의 원본을 바꾸지 않고, 생성되는 변수의 이름을 바꾸는 방법
+                                - 변수의 이름이 바꾸게 되면 기존에 사용했던 방법으로 해야 한다.      /    콜론 : 을 치고 바꿀 순 있다.
+
+                    6. 배열
+                        let array = [1, 2, 3]
+                        // 기존에 우리가 사용하던 방법 , 따로따로 담는 방법
+                            let a = array[0]
+                            let b = array[1]
+                            let c = array[2]
+                        // ES6 최신 문법
+                            let [a, b, c] = array
+                            let [a, ...rest] = array
+                                * 스프레드 연산자 (Spread Operator)     : '...' 스프레드 연산자는 객체에서도 사용이 가능하다.
+                                let a = [1, 2]
+                                let b = [3, 4]
+                                let c = [5, 6]
+                                // 기존 사용 방법 , 다 붙이고 싶을 때 , concat = 더하기
+                                let result = a.concat(b, c)
+                                // 스프레드 연산자 활용방법
+                                let result = [...a, ...b, ...c]         //          a의 내용 다 들고 와라, b의 내용 다 들고 와라, c의 내용 다 들고 와라 라는 뜻.
+                    
+                    - class
+                        1. 자바스크립트는 프로토타입 기반의 객체 지향 언어이다.     // 프로토타입이란 무엇을 추가시킨다 라는 뜻을 가진다.
+                        2. 클래스 기반의 객체 지향 프로그래밍도 할 수 있도록 class 키워드를 도입하였다.
+                        3. 자바스크립트에서 클래스는 내부적으로 프로토타입을 이용해서 만들어졌다.
+                        4. 클래스는 사실 특별한 함수이다.
+                        5. 클래스는 호이스팅이 let, const 키워드 처럼 동작한다.
+
+                    - 프로미스(Promise)
+                        1. 자바스크립트에서 비동기 처리를 기존에서 콜백함수를 사용한, 콜백 패턴을 시용했었다.
+                            - 콜백함수 ? 파라미터로 함수를 전달하는 함수. 파라미터로 함수를 전달받아 함수 내부에서 실행하는 함수.
+                                function add (a, b) {
+                                    return a + b;
+                                }
+                                function sayResult (value) {
+                                    console.log(value);
+                                }
+                                sayResult(add(3, 4))
+                                
+                                위의 코드를 콜백함수를 사용한 코드로 바꾸면 아래와 같다.
+                                
+                                function add (a, b, callback) {
+                                    callback(a + b)
+                                }
+                                function sayResult(value) {
+                                    console.log(value)
+                                }
+                                add(3, 5, sayResult)
+
+                            - 콜백 패턴이란? 파라미터에 인자로 전달되는 함수 뒤에 () 붙이지 않고, 전달함으로서, 실행되는 타이밍을 콜백함수내부로 옮기는 것. 그러한 패턴을 이야기 한다.
+
+                        2. 결과적으로는 콜백지옥(콜백헬)을 발생시켰다.
+                            - 콜백헬(CallbackHEll) 이란 ? 코드가 점점점점 깊게 깊게  딥다크하게 들어가는 것..
+                                - 함수안에 함수안에 함수안에 함수안에 가 반복되서 복잡할 때.
+                                    그럴 때 프로미스를 도입을 해서 단순하게 코드를 구성할 수 있게 끔 할 수있다.
+                        3. 이를 해결하기 위해 프로미스가 도입되었다
+                        4. 프로미스 후속처리 메소드를 이용해 에러 처리를 효과적으로 할 수 있게 되었다.
+                        5. 프로미스는 자바스크립트 비동기 처리에 사용되는 객체이다.
+                        6. 프로미스의 3가지 상태
+                            - Pending(대기)         : 비동기 처리 로직이 아직 완료되지 않은 상태
+                                * new Promise();    // 프로미스가 대기상태(Pending)가 되어진다.
+                                    * new Promise(function(resolve, reject){
+                                        .....
+                                    });
+                            - Fulfilled(이행)       : 비동기 처리가 완료되어 프로미스가 결과 값을 반환해준 상태
+                                * 위의 대기 상태에서 콜백 함수의 인자인 resolve를 실행하면 이행상태가 되어진다.
+                                    new Promise(function(resolve, reject){      //resolve, reject 사용가능
+                                        resolve();
+                                    });
+
+                                    function playPromise () {
+                                        return new Promise(function(resolve, reject) {
+                                            let data = 100;
+                                            resolve(data);
+                                        })
+                                    }
+                                    playPromise().then(function(resolveData) {          //.then : 결과값을 받아볼 수 있다.
+                                        console.log(resolveData)
+                                    });
+                            - Rejected(실패)        : 비동기 처리가 실패하거나 오류가 발생한 상태
+                                * 위의 대기 상태에서 콜백 함수의 인자인 reject를 실행하면 실패 상태가 되어진다.
+                                    * new Promise(function(resolve, reject){
+                                        reject();   //실패상태
+                                    });
+
+                                    function playPromise () {
+                                        return new Promise(function (resolve, reject){
+                                            reject(new Error("실패"));
+                                        })
+                                    }
+                                    playPromise().then().catch(function(err){       //,then().catch() : 결과값을 받아볼 수 있다.
+                                        console.log(arr)
+                                    })
+                        - .map()과 .filter()
+                            1.
+                        
+                        - 통상 프로그래밍은 동기화 되서 움직인다.
+                            ex) 순서대로 하나씩 진행을 해야 하는데 순서대로 하다가 오류가 발생하면 진행이 멈춘다.
+                        콜백함수는 무언가가 발생되었을 때 실행시킨다.
+                        비동기처리는 오류는 발생하면 진행을 멈추지 않고,  계속 쭉쭉 실행처리
         </textarea>
         <script>
             /* function foo() {
@@ -195,10 +330,71 @@
             //     },
             // };
             // person.getInfo();
-            let 이름 = 'SungJin';
+
+            /* let 이름 = 'SungJin';
             let 나이 = 20;
             let person = { 이름, 나이 };
-            console.log(person);
+            console.log(person); */
+
+            /* let bts = {
+                name: '방탄소년단',
+                num: 7,
+            }; */
+            //let name = bts.name;
+            //let num = bts.num;
+            /* let { name, num } = bts;
+            console.log(name, num); */
+
+            /* let array = [1, 2, 3];
+            let [a, ...rest] = array;
+            console.log(a, rest);
+            console.log(array); */
+
+            /* let person = {
+                name: '김성진',
+                age: 20,
+                cute: true,
+            };
+            let { name, ...restInfo } = person;
+            console.log(name, restInfo);
+
+            let a = [1, 2];
+            let b = [3, 4];
+            let c = [5, 6];
+            // 기존 사용 방법 , 다 붙이고 싶을 때 , concat = 더하기
+            //let result = a.concat(b, c);
+            let result = [...a, ...b, ...c];
+            console.log(result); */
+
+            /* class Car {
+                constructor(make, color) {
+                    this.make = make;
+                    this.color = color;
+                }
+            }
+            let hyundai = new Car('MrJung', 'Blue');
+            Car.prototype.summary = function () {
+                console.log(`This car is a ${this.make} in the colour ${this.color}`);
+                // 여기에서 화살표 함수를 쓰면 사용이 불가능 해진다.
+            };
+            //hyundai.summary();
+            console.log(Car);
+            console.log(hyundai); */
+
+            /* new Promise(function (resolve, reject) {
+                resolve();
+            });
+
+            function playPromise() {
+                return new Promise(function (resolve, reject) {
+                    let data = 100;
+                    resolve(data);
+                });
+            }
+            playPromise().then(function (resolveData) {
+                //.then : 결과값을 받아볼 수 있다.
+                console.log(resolveData);
+            }); */
         </script>
     </body>
 </html>
