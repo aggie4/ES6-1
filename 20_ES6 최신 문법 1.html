@@ -17,7 +17,7 @@
             5. 문법을 나열하면 다음과 같다.
                 - 템플릿 리터럴
                     1. 사용법은 백틱으로 사용된다.
-                    2. `ES6 최신문법을 사용하는 나는 ${myName}이다.`
+                    2. `ES6 최신문법을 사용하는 나는 ${myName}이다.`    =       다이나믹한(동적인것들) 추가
 
                         ES5
                         var str1 = ', ';
@@ -154,18 +154,19 @@
                 - 모듈 (Module)
                     1. 모듈이란 재사용하기 위한 코드의 조각을 뜻한다.
                     2. 세부사항은 캡슐화 시키고, API 부분만 외부에 노출시킨 코드이다.
+                        * 캡슐화 : 필요한 내용들을 한 곳 모아서 정리정돈한 상태이다.
                     3. type에 module를 추가시키고, 확장자를 mjs로 변경해서 사용한다.
                     4. 모듈은 모듈 스코프를 가지며, import와 export 키워드를 이용하게 사용하게 된다.
                         <script type="module" src="lib.mjs"></script>
 
                 - 구조 분해 할당
-                    1. 구조 분해 할당이란 펼치다 라는 뜻이다.
+                    1. 구조 분해 할당이란 펼친다 라는 뜻이다.
                     2. 객체나 배열에서 사용한다.
                     3. 값을 해체한 후, 개별 값을 변수에 새로 할당하는 과정을 이야기한다.
 
                         // 배열에서 Spread 사용
                         const arr = [1, 2, 3];
-                        const [one, two, three] = arr
+                        const [one, two, three] =  arr;         = 배열방식
                         one     // 1
                         two     // 2
                         three   // 3
@@ -189,6 +190,25 @@
                             }
                         바뀐 방법으로 만들면 다음과 같다.
                             let person = {name, age}
+
+                    - 디스트럭팅 (Destructuring)
+                    1-1. 객체
+                        let person = {
+                            name : 'SungJin'
+                            age : 20,
+                            cute : true
+                        }
+                        let {name, age, cute} = person; 의 코드는
+                        let name = person.name
+                        let age = person.age
+                        let cute = person.cute
+
+                    1-2. 배열
+                        let array = [1,2,3]
+                        let [a,b,c] = array 의 코드는
+                        let a = array[0]
+                        let b = array[1]
+                        let c = array[2]
 
                     5. 객체 분해 방법
                         let bts = {
@@ -217,9 +237,9 @@
                                 let b = [3, 4]
                                 let c = [5, 6]
                                 // 기존 사용 방법 , 다 붙이고 싶을 때 , concat = 더하기
-                                let result = a.concat(b, c)
+                                    let result = a.concat(b, c)
                                 // 스프레드 연산자 활용방법
-                                let result = [...a, ...b, ...c]         //          a의 내용 다 들고 와라, b의 내용 다 들고 와라, c의 내용 다 들고 와라 라는 뜻.
+                                    let result = [...a, ...b, ...c]         //          a의 내용 다 들고 와라, b의 내용 다 들고 와라, c의 내용 다 들고 와라 라는 뜻.
                     
                     - class
                         1. 자바스크립트는 프로토타입 기반의 객체 지향 언어이다.     // 프로토타입이란 무엇을 추가시킨다 라는 뜻을 가진다.
