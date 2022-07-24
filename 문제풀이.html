@@ -8,6 +8,7 @@
     </head>
     <body>
         <script>
+            // ES6 최신문법 1
             /* let name = "JiHun's fruit store";
                 let fruits = ['banana', 'apple', 'mango'];
                 let address = 'Ulsan';
@@ -24,24 +25,24 @@
             calculate({ a: 1, b: 2, c: 3 }); */
 
             // 4.다음 문제에 정답이 true가 나오게 하시오
-            let name = 'JiHun store';
+            /* let name = 'JiHun store';
             let fruits = ['banana', 'apple', 'mango'];
             let address = {
                 country: 'Korea',
                 city: 'Ulsan',
-            };
+            }; */
             // 4.다음 문제에 정답이 true가 나오게 하시오
-            function findStore(obj) {
+            /* function findStore(obj) {
                 let {
                     name,
                     address: { city },
                 } = obj;
                 return (name = 'JiHun store' && city == 'Ulsan');
             }
-            console.log(findStore({ name, fruits, address }));
+            console.log(findStore({ name, fruits, address })); */
 
             //5. 다음과 같이 프린트 되게 코드를 바꾸시오
-            function getNumber() {
+            /* function getNumber() {
                 let array = [1, 2, 3, 4, 5, 6]; // 여기서 부터 바꾸시오
                 let [first, , third, forth] = array;
                 //let first = array[0];
@@ -49,22 +50,22 @@
                 //let forth = array[3];
                 return { first, third, forth };
             }
-            console.log(getNumber()); // 결과값 {first:1, third:3, forth:4}
+            console.log(getNumber()); */ // 결과값 {first:1, third:3, forth:4}
 
             //6. 다음의 결과가 true가 되게 하시오
-            function getCalendar(first, ...rest) {
+            /* function getCalendar(first, ...rest) {
                 //...rest 는 자동으로 묶음으로 들어간다
                 return first === 'January' && rest[0] === 'Febuary' && rest[1] === 'March' && rest[2] === undefined;
             }
-            console.log(getCalendar('January', 'Febuary', 'March')); //여기를 바꾸시오
+            console.log(getCalendar('January', 'Febuary', 'March')); */ //여기를 바꾸시오
 
             //7. 두 어레이들 중 최소값을 찾는 함수를 완성하시오
-            function getMinimum() {
+            /* function getMinimum() {
                 let a = [45, 23, 78];
                 let b = [54, 11, 9];
                 return Math.min(...a, ...b); // 여기를 바꾸시오
             }
-            console.log(getMinimum());
+            console.log(getMinimum()); */
 
             //8. 다음의 함수를 화살표 함수로 바꾸시오
             /* function sumNumber() {
@@ -95,11 +96,54 @@
             };
             console.log(sumNumber()); */
 
-            function sumNumber() {
+            /* function sumNumber() {
                 let addNumber = (a) => (b) => (c) => a + b + c;
                 return addNumber(1)(2)(3);
             }
-            console.log(sumNumber());
+            console.log(sumNumber()); */
+
+            // ES6 최신문법 2
+            let names = ['Steven Paul jobs', 'Bill Gates', 'Mark Elliot Zuckerberg', 'Elon Musk', 'Jeff Bezos', 'Warren Edward Buffett', 'Larry Page', 'Larry Ellison', 'Tim Cook', 'Lloyd Blankfein'];
+            //모든 문제는 위의 배열이 사용됩니다.
+            // 1. map 문제
+            /*
+                모든 이름을 대문자로 바꾸어서 출력하시오.
+                성을 제외한 이름만 출력하시오
+                이름의 이니셜만 출력하시오
+            */
+            let data = names.map((item) => {
+                return item.toUpperCase();
+            });
+            console.log(data);
+
+            let data2 = names.map((item) => {
+                return item.split(' ')[0];
+            });
+            console.log(data2);
+
+            let data3 = names.map((item) => {
+                let splitName = item.split(' ');
+                let initial = '';
+                splitName.forEach((nameItem) => (initial += nameItem[0]));
+                return initial;
+            });
+            console.log(data3);
+
+            // 2. filter 문제
+            /*
+                이름에 a를 포함한 사람들을 출력하시오
+                이름에 같은 글자가 연속해서 들어간 사람을 출력
+            */
+            let data4 = names.filter((item) => {
+                return item.includes('a');
+            });
+            console.log(data4);
+
+            let data5 = names.filter((item) => {
+                let splitName = item.split('');
+                return splitName.some((letter, index) => letter == splitName[index + 1]);
+            });
+            console.log(data5);
         </script>
     </body>
 </html>
